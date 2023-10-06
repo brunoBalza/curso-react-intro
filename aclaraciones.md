@@ -82,7 +82,7 @@
     Como vemos todos los componentes esta dentro de un DIV q se llama "App", esto es porq react no puedo renderizar varios elementos dentro de 1 return, pero de esta menera vamos a tener 2 div con la misma funcion, uno "root" q es el de html y otro el del JS q es donde estamos llamando a los componentes
 
         SOLUCION: para esto React a diseñado "<React.fragment> ... <React.fragment/>" q es el elemento que este necesita para que renderice este, y dentro podamos ubicar todos los elementos que queramos, y lo mas interesante es q este elemento no se ve en el HTML, o sea, que solo nos va a aparecer el div "root"
-        y de esta manera no afecta a la estructura de la aplicacion
+        y de esta manera no afecta a la estructura de la aplicacion. TAMBIEN, y es hasta mejor, simplemte ponemos los pico parentesis pero sin nada dentro <> ... </> de esta menera React tmb lo considera como si fuese "REACT.FRAGMENT"
 
     OTRA FORMA DE RENDERIZAR VARIOS ELEMENTOS
 
@@ -139,3 +139,13 @@
         luego importamos el archivo a donde lo necesitamos y listo
 
         lo importamos con comillitas simples y nada mas, anda de objeto ni from
+
+    CLASES DINAMICAS
+
+        como vemos en TodoItem.js tenemos 2 className dentro de la lista, que cada uno esta dentro de una etiqueta span, estas 2 son para darle un span segun sea el caso de si esta realizada o no esa tarea, por eso es q lleva el valor de "--active" o "--completed"
+
+        para esto es necesario q el valor de la propiedad este con comillas francesas, pero como el lenguaje q estamos trabajando es JSX es necesario encerrar el valor entre llaves para escribir JS
+
+        ahora vamos a usar ${} para escribir mas JS dentro de esta clase, y vamos a usar un operador ternario q es && (si y solo si) para preguntar si es false o true y dar la condicion necesario o sea, el stilo q buscamos
+
+        y lo vamos a hacer con PROPS, props.completed y de esta forma va a determinar si completed esta true o false
