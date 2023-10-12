@@ -4,7 +4,7 @@ import { TodoIcon } from "./TodoIcon";
 function CompleteIcon() {
     return (
         <TodoIcon
-            type='complete'
+            type='check'
             color='grey'
         />
     );
