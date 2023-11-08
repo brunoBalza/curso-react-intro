@@ -7,17 +7,32 @@ import './App.css';
 import React from 'react';
 
 
-const defaultTodos = [
-  { text: 'Cocinar para la noche', completed: false },
-  { text: 'Levantarme por la mañana', completed: true },
-  { text: 'Intentar hacer algo', completed: false },
-  { text: 'Desintentar todo', completed: true },
-  { text: 'Desintentar todos', completed: true },
-  { text: 'Desintentar todos1', completed: true },
-];
+// const defaultTodos = [
+//   { text: 'Cocinar para la noche', completed: false },
+//   { text: 'Levantarme por la mañana', completed: true },
+//   { text: 'Intentar hacer algo', completed: false },
+//   { text: 'Desintentar todo', completed: true },
+//   { text: 'Desintentar todos', completed: true },
+//   { text: 'Desintentar todos1', completed: true },
+// ];
+// localStorage.setItem('TODOS_V1', JSON.stringify(defaultTodos));
+
 
 function App() {
-  const [todos, setTodos] = React.useState(defaultTodos);
+  const localStorageTodos = localStorage.getItem('TODOS_V1'); // va a recibir strings
+
+  let parsedTodos;
+
+  if (!localStorageTodos) {
+    localStorage.setItem('TODOS_V1', JSON.stringify([]));
+    parsedTodos = [];
+  } else {
+    parsedTodos = JSON.parse(localStorageTodos);
+  }
+
+  // let parsedTodos = JSON.parse(localStorageTodos); // Esto es el parceo
+
+  const [todos, setTodos] = React.useState(parsedTodos);
   const [searchValue, setSearchValue] = React.useState('');
 
   const completeTodos = todos.filter(
@@ -28,6 +43,13 @@ function App() {
   const searchedTodos = todos.filter(
     todo => todo.text.toLowerCase().includes(searchValue.toLowerCase())
   );
+  
+  const saveTodos = (newTodos) => {
+    localStorage.setItem('TODOS_V1', JSON.stringify(newTodos))
+    
+    setTodos(newTodos);
+  }
+
 
   const completeTodo = (text) => {
     const newTodos = [...todos];
@@ -35,16 +57,17 @@ function App() {
       todo => todo.text === text
     );
     newTodos[todoIndex].completed = true;
-    setTodos(newTodos)
+    saveTodos(newTodos)
   }
   
+
   const deleteTodo = (text) => {
     const newTodos = [...todos];
     const todoIndex = newTodos.findIndex(
       todo => todo.text === text
     );
     newTodos.splice(todoIndex, 1);
-    setTodos(newTodos)
+    saveTodos(newTodos)
   }
 
   return (
