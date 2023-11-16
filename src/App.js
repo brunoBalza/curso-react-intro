@@ -17,22 +17,34 @@ import React from 'react';
 // ];
 // localStorage.setItem('TODOS_V1', JSON.stringify(defaultTodos));
 
+function useLocalStorage(itemName, initialValue) {
+  
+  const localStorageItem = localStorage.getItem(itemName); // va a recibir strings
+  
+  let parsedItem;
+
+  if (!localStorageItem) {
+    localStorage.setItem(itemName, JSON.stringify(initialValue));
+    parsedItem = [];
+  } else {
+    parsedItem = JSON.parse(localStorageItem);
+  }
+
+  const [item, setItem] = React.useState(parsedItem);
+  
+  const saveItem = (newItems) => {
+  localStorage.setItem(itemName, JSON.stringify(newItems))    
+    setItem(newItems);
+  }
+  return [item, saveItem];
+}
 
 function App() {
-  const localStorageTodos = localStorage.getItem('TODOS_V1'); // va a recibir strings
 
-  let parsedTodos;
-
-  if (!localStorageTodos) {
-    localStorage.setItem('TODOS_V1', JSON.stringify([]));
-    parsedTodos = [];
-  } else {
-    parsedTodos = JSON.parse(localStorageTodos);
-  }
 
   // let parsedTodos = JSON.parse(localStorageTodos); // Esto es el parceo
 
-  const [todos, setTodos] = React.useState(parsedTodos);
+  const [todos, saveTodos] = useLocalStorage('TODOS_V1', []);
   const [searchValue, setSearchValue] = React.useState('');
 
   const completeTodos = todos.filter(
@@ -44,11 +56,11 @@ function App() {
     todo => todo.text.toLowerCase().includes(searchValue.toLowerCase())
   );
   
-  const saveTodos = (newTodos) => {
-    localStorage.setItem('TODOS_V1', JSON.stringify(newTodos))
+  // const saveTodos = (newTodos) => {
+  //   localStorage.setItem('TODOS_V1', JSON.stringify(newTodos))
     
-    setTodos(newTodos);
-  }
+  //   setTodos(newTodos);
+  // }
 
 
   const completeTodo = (text) => {
