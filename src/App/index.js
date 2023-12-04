@@ -4,22 +4,27 @@ import './App.css';
 import { useLocalStorage } from './useLocalStorage';
 
 
-const defaultTodos = [
-  { text: 'Cocinar para la noche', completed: false },
-  { text: 'Levantarme por la mañana', completed: true },
-  { text: 'Intentar hacer algo', completed: false },
-  { text: 'Desintentar todo', completed: true },
-  { text: 'Desintentar todos', completed: true },
-  { text: 'Desintentar todos1', completed: true },
-];
-localStorage.setItem('TODOS_V1', JSON.stringify(defaultTodos));
+// const defaultTodos = [
+//   { text: 'Cocinar para la noche', completed: false },
+//   { text: 'Levantarme por la mañana', completed: true },
+//   { text: 'Intentar hacer algo', completed: false },
+//   { text: 'Desintentar todo', completed: true },
+//   { text: 'Desintentar todos', completed: true },
+//   { text: 'Desintentar todos1', completed: true },
+// ];
+// localStorage.setItem('TODOS_V1', JSON.stringify(defaultTodos));
 
 function App() {
 
 
   // let parsedTodos = JSON.parse(localStorageTodos); // Esto es el parceo
 
-  const [todos, saveTodos] = useLocalStorage('TODOS_V1', []);
+  const {
+    item: todos,
+    saveItem: saveTodos,
+    loading,
+    error
+  } = useLocalStorage('TODOS_V1', []);
   const [searchValue, setSearchValue] = React.useState('');
 
   const completeTodos = todos.filter(
@@ -37,16 +42,6 @@ function App() {
   //   setTodos(newTodos);
   // }
 
-  console.log('log 1');
-  
-  // React.useEffect( () => {
-  //   console.log('log 2');
-  // }, []);
-  React.useEffect( () => {
-    console.log('log 2 tendria q funcionar aca');
-  }, [totalTodos]);
-
-  console.log('log 3');
 
   const completeTodo = (text) => {
     const newTodos = [...todos];
@@ -68,6 +63,8 @@ function App() {
   }
   return (
       <AppUI
+        loading={loading}
+        error={error}
         totalTodos = { totalTodos }
         completeTodos = { completeTodos }
         searchValue = { searchValue }
