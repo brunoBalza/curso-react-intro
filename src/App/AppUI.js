@@ -6,30 +6,24 @@ import { TodoItem } from '../TodoItem';
 import { TodosLoading } from '../TodosLoading';
 import { TodosError } from '../TodosError';
 import { EmptyTodos } from '../EmptyTodos';
+import { TodoContext } from '../TodoContext';
 
-function AppUI({
-    loading,
-    error,
-    totalTodos,
-    completeTodos,
-    searchValue,
-    setSearchValue,
-    searchedTodos,
-    completeTodo,
-    deleteTodo
-}) {
+
+function AppUI() {
     return (
         <>
-          <TodoCounter 
-            total={totalTodos} 
-            completed={completeTodos}
-          />
-          <TodoSearch 
-            searchValue={searchValue}
-            setSearchValue={setSearchValue}
-          />
+          <TodoCounter />
+          <TodoSearch />
     
-          <TodoList>
+        <TodoContext.Consumer>
+          {({
+            loading,
+            error,
+            searchedTodos,
+            completeTodo,
+            deleteTodo
+          }) => (  
+            <TodoList>
             {loading && (
               <>
                 <TodosLoading/>
@@ -50,8 +44,17 @@ function AppUI({
               />
             ))}
           </TodoList>
+          )}
+        </TodoContext.Consumer>
           
-          <CreateTodoButton />
+        <CreateTodoButton />
+
+        {openModal && (
+        <Modal>
+          La funcionalidad de agregar TODO
+        </Modal>
+        )}
+
         </>
     );
 }

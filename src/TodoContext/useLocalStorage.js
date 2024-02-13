@@ -45,3 +45,13 @@ function useLocalStorage(itemName, initialValue) {
   };
   
 export { useLocalStorage }
+
+// const defaultTodos = [
+//   { text: 'Cocinar para la noche', completed: false },
+//   { text: 'Levantarme por la mañana', completed: true },
+//   { text: 'Intentar hacer algo', completed: false },
+//   { text: 'Desintentar todo', completed: true },
+//   { text: 'Desintentar todos', completed: true },
+//   { text: 'Desintentar todos1', completed: true },
+// ];
+// localStorage.setItem('TODOS_V1', JSON.stringify(defaultTodos));
