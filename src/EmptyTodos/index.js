@@ -3,7 +3,7 @@ import React from 'react';
 function EmptyTodos() {
     return (
     <p>
-      Ha ocurrido un error! F
+      No tenes TODOs, crea alguno
     </p>
   );
 }
